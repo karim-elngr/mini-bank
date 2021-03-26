@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-class AccountsRestApiIT {
+class AccountsRestApiIntegrationTests {
 
     @Autowired
     private AccountsRestApi accountsRestApi;
