@@ -20,7 +20,7 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
 
       - name: Run build with Maven
-        run: mvn -B install --no-transfer-progress --file pom.xml
+        run: mvn -B install --no-transfer-progress --file ./currentaccounts/pom.xml
 
   coverage:
     needs: build
@@ -35,7 +35,7 @@ jobs:
           java-version: 11
       
       - name: Run verify with Maven
-        run: mvn -B verify -P coverage --no-transfer-progress
+        run: mvn -B verify -P coverage --no-transfer-progress --file ./currentaccounts/pom.xml
 
       - name: Publish code coverage reports
         uses: codecov/codecov-action@v1
