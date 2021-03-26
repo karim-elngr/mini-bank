@@ -22,7 +22,7 @@ public class AccountsRestApiUT {
     private CreateNewAccountFacade createNewAccountFacade;
 
     @Test
-    void createNewAccount_whenCalledWithValidArguments_createNewAccountAndReturnCreatedStatusCode() {
+    void createNewAccount_whenArgumentsAreValid_createNewAccountAndReturnCreatedStatusCode() {
 
         final CreateNewAccountRequestDto request = CreateNewAccountRequestDtoInstanceProvider.createWithFullPayload();
 
