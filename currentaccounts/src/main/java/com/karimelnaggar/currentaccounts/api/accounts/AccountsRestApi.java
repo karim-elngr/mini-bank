@@ -11,18 +11,18 @@ import javax.validation.constraints.NotNull;
 @RequestMapping("/accounts")
 class AccountsRestApi {
 
-    private final CreateNewAccountFacade createNewAccountFacade;
+    private final CreateAccountAdapter createAccountAdapter;
 
-    public AccountsRestApi(CreateNewAccountFacade createNewAccountFacade) {
-        this.createNewAccountFacade = createNewAccountFacade;
+    public AccountsRestApi(CreateAccountAdapter createAccountAdapter) {
+        this.createAccountAdapter = createAccountAdapter;
     }
 
     @PostMapping
-    public ResponseEntity<CreateNewAccountResponseDto> createNewAccount(
-            @Valid @NotNull @RequestBody CreateNewAccountRequestDto request
+    public ResponseEntity<CreateAccountResponseDto> createNewAccount(
+            @Valid @NotNull @RequestBody CreateAccountRequestDto request
     ) {
-        final CreateNewAccountResponseDto createNewAccountResponseDto = createNewAccountFacade.createNewAccount(request);
+        final CreateAccountResponseDto createAccountResponseDto = createAccountAdapter.createAccount(request);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(createNewAccountResponseDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createAccountResponseDto);
     }
 }

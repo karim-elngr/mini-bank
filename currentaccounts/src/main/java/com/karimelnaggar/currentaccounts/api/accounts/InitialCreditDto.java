@@ -5,7 +5,7 @@ import org.springframework.format.annotation.NumberFormat;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-class CreditDto {
+class InitialCreditDto {
 
     @NotNull
     @NumberFormat
@@ -14,11 +14,11 @@ class CreditDto {
     @NotEmpty
     private String currency;
 
-    public CreditDto() {
+    public InitialCreditDto() {
 
     }
 
-    public CreditDto(@NotNull String amount, @NotEmpty String currency) {
+    public InitialCreditDto(@NotNull String amount, @NotEmpty String currency) {
         this.amount = amount;
         this.currency = currency;
     }

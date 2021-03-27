@@ -1,7 +1,9 @@
-name: CI
+name: ACCOUNTS_CI
 on: push
+  paths:
+    - 'currentaccounts/**'
 jobs:
-  CI:
+  ACCOUNTS_CI:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
@@ -19,14 +21,14 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
-      - name: Run build with Maven
-        run: mvn -B install --no-transfer-progress --file ./currentaccounts/pom.xml
+      - name: Run verify with Maven
+        run: mvn -B verify --no-transfer-progress --file ./currentaccounts/pom.xml
 
       - name: Publish code coverage reports
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          file: ./**/target/site/jacoco//jacoco.xml
-          flags: unittests
-          fail_ci_if_error: false
+          file: ./**/target/site/jacoco/jacoco.xml
+          flags: unittests, integrationtests
+          fail_ci_if_error: true
           verbose: true
