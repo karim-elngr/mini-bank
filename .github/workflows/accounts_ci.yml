@@ -1,7 +1,8 @@
 name: ACCOUNTS_CI
-on: push
-  paths:
-    - 'currentaccounts/**'
+on: 
+  push:
+    paths:
+      - 'currentaccounts/**'
 jobs:
   ACCOUNTS_CI:
     runs-on: ubuntu-latest
