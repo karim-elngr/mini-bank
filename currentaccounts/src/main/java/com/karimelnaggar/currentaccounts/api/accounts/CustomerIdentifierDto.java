@@ -2,16 +2,16 @@ package com.karimelnaggar.currentaccounts.api.accounts;
 
 import javax.validation.constraints.NotEmpty;
 
-class CustomerDto {
+class CustomerIdentifierDto {
 
     @NotEmpty
     private String customerId;
 
-    public CustomerDto() {
+    public CustomerIdentifierDto() {
 
     }
 
-    public CustomerDto(@NotEmpty String customerId) {
+    public CustomerIdentifierDto(@NotEmpty String customerId) {
         this.customerId = customerId;
     }
 

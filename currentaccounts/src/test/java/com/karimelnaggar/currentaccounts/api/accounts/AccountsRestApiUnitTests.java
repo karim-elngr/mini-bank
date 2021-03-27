@@ -5,7 +5,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -19,22 +18,22 @@ public class AccountsRestApiUnitTests {
     private AccountsRestApi accountsRestApi;
 
     @Mock
-    private CreateNewAccountFacade createNewAccountFacade;
+    private CreateAccountAdapter createAccountAdapter;
 
     @Test
     void createNewAccount_whenArgumentsAreValid_createNewAccountAndReturnCreatedStatusCode() {
 
-        final CreateNewAccountRequestDto request = CreateNewAccountRequestDtoInstanceProvider.createWithFullPayload();
+        final CreateAccountRequestDto request = CreateNewAccountRequestDtoInstanceProvider.createWithFullPayload();
 
-        final CreateNewAccountResponseDto expectedResponse = new CreateNewAccountResponseDto();
-        doReturn(expectedResponse).when(createNewAccountFacade).createNewAccount(request);
+        final CreateAccountResponseDto expectedResponse = new CreateAccountResponseDto();
+        doReturn(expectedResponse).when(createAccountAdapter).createAccount(request);
 
-        final ResponseEntity<CreateNewAccountResponseDto> response = accountsRestApi.createNewAccount(request);
+        final ResponseEntity<CreateAccountResponseDto> response = accountsRestApi.createNewAccount(request);
 
         assertThat(response).isNotNull();
         assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.CREATED);
         assertThat(response.getBody()).isEqualTo(expectedResponse);
 
-        verify(createNewAccountFacade, times(1)).createNewAccount(request);
+        verify(createAccountAdapter, times(1)).createAccount(request);
     }
 }
