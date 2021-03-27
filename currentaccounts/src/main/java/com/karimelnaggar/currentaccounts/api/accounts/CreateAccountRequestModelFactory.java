@@ -5,19 +5,23 @@ import com.karimelnaggar.currentaccounts.service.accounts.CustomerIdentifierMode
 import com.karimelnaggar.currentaccounts.service.accounts.InitialCreditModel;
 import org.javamoney.moneta.Money;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import javax.money.CurrencyUnit;
 import javax.money.Monetary;
+import javax.money.UnknownCurrencyException;
 import java.math.BigDecimal;
+import java.util.Objects;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkArgument;
 
 @Component
 public class CreateAccountRequestModelFactory {
 
     public CreateAccountRequestModel newCreateAccountRequestModel(CreateAccountRequestDto request) {
 
-        checkNotNull(request);
+        checkArgument(Objects.nonNull(request), "request cannot be null");
+        checkArgument(StringUtils.hasText(request.getCurrentAccountId()), "current account id cannot be null");
 
         final CustomerIdentifierModel customerIdentifierModel = createCustomerIdentifierModel(request);
 
@@ -32,18 +36,27 @@ public class CreateAccountRequestModelFactory {
 
     private CustomerIdentifierModel createCustomerIdentifierModel(CreateAccountRequestDto request) {
 
-        checkNotNull(request.getCustomer());
+        checkArgument(Objects.nonNull(request.getCustomer()), "customer cannot be null");
+        checkArgument(StringUtils.hasText(request.getCustomer().getCustomerId()), "customer id cannot be null");
 
         return new CustomerIdentifierModel(request.getCustomer().getCustomerId());
     }
 
     private InitialCreditModel createInitialCreditModel(CreateAccountRequestDto request) {
 
-        checkNotNull(request.getInitialCredit());
+        checkArgument(Objects.nonNull(request.getInitialCredit()), "initial credit cannot be null");
+        checkArgument(StringUtils.hasText(request.getInitialCredit().getAmount()), "amount cannot be null");
+        checkArgument(StringUtils.hasText(request.getInitialCredit().getCurrency()), "currency cannot be null");
 
-        final BigDecimal amount = new BigDecimal(request.getInitialCredit().getAmount());
-        final CurrencyUnit currencyUnit = Monetary.getCurrency(request.getInitialCredit().getCurrency());
+        try {
+            final BigDecimal amount = new BigDecimal(request.getInitialCredit().getAmount());
+            final CurrencyUnit currencyUnit = Monetary.getCurrency(request.getInitialCredit().getCurrency());
 
-        return new InitialCreditModel(Money.of(amount, currencyUnit));
+            return new InitialCreditModel(Money.of(amount, currencyUnit));
+
+        } catch (final NumberFormatException | UnknownCurrencyException exception) {
+
+            throw new IllegalArgumentException("amount or currency are not properly formatted", exception);
+        }
     }
 }
