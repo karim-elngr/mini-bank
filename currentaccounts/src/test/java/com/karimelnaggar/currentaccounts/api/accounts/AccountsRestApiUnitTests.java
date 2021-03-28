@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class AccountsRestApiUnitTests {
+class AccountsRestApiUnitTests {
 
     @InjectMocks
     private AccountsRestApi accountsRestApi;
@@ -23,7 +23,7 @@ public class AccountsRestApiUnitTests {
     @Test
     void createNewAccount_whenArgumentsAreValid_createNewAccountAndReturnCreatedStatusCode() {
 
-        final CreateAccountRequestDto request = CreateNewAccountRequestDtoInstanceProvider.createWithFullPayload();
+        final CreateAccountRequestDto request = CreateAccountRequestDtoInstanceProvider.createValidRequest();
 
         final CreateAccountResponseDto expectedResponse = new CreateAccountResponseDto();
         doReturn(expectedResponse).when(createAccountAdapter).createAccount(request);
@@ -33,7 +33,5 @@ public class AccountsRestApiUnitTests {
         assertThat(response).isNotNull();
         assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.CREATED);
         assertThat(response.getBody()).isEqualTo(expectedResponse);
-
-        verify(createAccountAdapter, times(1)).createAccount(request);
     }
 }

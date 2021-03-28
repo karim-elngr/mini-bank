@@ -1,10 +1,12 @@
 package com.karimelnaggar.currentaccounts.service.accounts;
 
+import com.karimelnaggar.currentaccounts.service.model.Account;
+
 import java.util.Optional;
 
 public interface AccountsService {
 
-    Account createNewAccount(Account account);
+    Account persist(Account account);
 
-    Optional<Account> getAccount(String currentAccountId);
+    Optional<Account> findAccount(String currentAccountId);
 }

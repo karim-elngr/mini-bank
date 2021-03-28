@@ -1,8 +1,8 @@
 package com.karimelnaggar.currentaccounts.api.accounts;
 
-import com.karimelnaggar.currentaccounts.service.accounts.CreateAccountRequestModel;
-import com.karimelnaggar.currentaccounts.service.accounts.CustomerIdentifierModel;
-import com.karimelnaggar.currentaccounts.service.accounts.InitialCreditModel;
+import com.karimelnaggar.currentaccounts.service.model.CreateAccountRequestModel;
+import com.karimelnaggar.currentaccounts.service.model.CustomerIdentifierModel;
+import com.karimelnaggar.currentaccounts.service.model.InitialCreditModel;
 import org.javamoney.moneta.Money;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;

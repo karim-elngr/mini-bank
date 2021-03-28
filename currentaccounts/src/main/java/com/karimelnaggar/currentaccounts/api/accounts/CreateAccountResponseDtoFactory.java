@@ -1,6 +1,6 @@
 package com.karimelnaggar.currentaccounts.api.accounts;
 
-import com.karimelnaggar.currentaccounts.service.accounts.Account;
+import com.karimelnaggar.currentaccounts.service.model.Account;
 import org.springframework.stereotype.Component;
 
 import static com.google.common.base.Preconditions.checkNotNull;

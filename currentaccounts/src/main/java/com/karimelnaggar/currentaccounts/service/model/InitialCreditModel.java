@@ -1,4 +1,4 @@
-package com.karimelnaggar.currentaccounts.service.accounts;
+package com.karimelnaggar.currentaccounts.service.model;
 
 import javax.money.MonetaryAmount;
 
