@@ -1,11 +1,13 @@
 package com.karimelnaggar.currentaccounts.api.accounts;
 
-import com.karimelnaggar.currentaccounts.service.accounts.Account;
+import com.karimelnaggar.currentaccounts.service.model.Account;
 import com.karimelnaggar.currentaccounts.service.accounts.CreateAccountFacade;
-import com.karimelnaggar.currentaccounts.service.accounts.CreateAccountRequestModel;
+import com.karimelnaggar.currentaccounts.service.model.CreateAccountRequestModel;
 import org.springframework.stereotype.Component;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import java.util.Objects;
+
+import static com.google.common.base.Preconditions.checkArgument;
 
 @Component
 class CreateAccountAdapterImpl implements CreateAccountAdapter {
@@ -27,7 +29,7 @@ class CreateAccountAdapterImpl implements CreateAccountAdapter {
     @Override
     public CreateAccountResponseDto createAccount(CreateAccountRequestDto request) {
 
-        checkNotNull(request);
+        checkArgument(Objects.nonNull(request), "request cannot be null");
 
         final CreateAccountRequestModel createAccountRequestModel = createAccountRequestModelFactory.newCreateAccountRequestModel(request);
 

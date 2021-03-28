@@ -2,9 +2,9 @@ package com.karimelnaggar.currentaccounts.api.accounts;
 
 import java.util.List;
 
-final class CreateAccountRequestDtoInstanceProvider {
+public class CreateAccountRequestDtoInstanceProvider {
 
-    static List<CreateAccountRequestDto> createWithInvalidFields() {
+    public static List<CreateAccountRequestDto> createWithInvalidFields() {
 
         return List.of(
 
@@ -113,7 +113,7 @@ final class CreateAccountRequestDtoInstanceProvider {
         );
     }
 
-    static CreateAccountRequestDto createValidRequest() {
+    public static CreateAccountRequestDto createValidRequest() {
 
         return new CreateAccountRequestDto(
                 "currentAccountId#1",

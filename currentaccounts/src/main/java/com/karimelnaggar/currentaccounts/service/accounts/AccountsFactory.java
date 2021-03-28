@@ -2,8 +2,13 @@ package com.karimelnaggar.currentaccounts.service.accounts;
 
 import com.karimelnaggar.currentaccounts.service.model.Account;
 import com.karimelnaggar.currentaccounts.service.model.CreateAccountRequestModel;
+import org.springframework.stereotype.Component;
 
-public interface CreateAccountFacade {
+@Component
+public class AccountsFactory {
 
-    Account createNewAccount(CreateAccountRequestModel createAccountRequestModel);
+    public Account createNewAccount(CreateAccountRequestModel createAccountRequestModel) {
+
+        return null;
+    }
 }

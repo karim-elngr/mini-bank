@@ -1,6 +1,6 @@
 package com.karimelnaggar.currentaccounts.api.accounts;
 
-import com.karimelnaggar.currentaccounts.service.accounts.CreateAccountRequestModel;
+import com.karimelnaggar.currentaccounts.service.model.CreateAccountRequestModel;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
