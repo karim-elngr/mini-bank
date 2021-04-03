@@ -4,17 +4,33 @@ import java.util.List;
 
 public class CreateAccountRequestDtoInstanceProvider {
 
-    public static List<CreateAccountRequestDto> createWithInvalidFields() {
+    public static CreateAccountRequestDto createValidRequest() {
+
+        return new CreateAccountRequestDto(
+                "currentAccountId#1",
+                new CustomerDto(
+                        "customerId#1",
+                        "karim",
+                        "elnaggar"),
+                new CreditDto(
+                        "500.05",
+                        "EUR"
+                )
+        );
+    }
+
+    public static List<CreateAccountRequestDto> createInvalidRequests() {
 
         return List.of(
 
                 // Current account id is null
                 new CreateAccountRequestDto(
                         null,
-                        new CustomerIdentifierDto(
-                                "customerId#1"
-                        ),
-                        new InitialCreditDto(
+                        new CustomerDto(
+                                "customerId#1",
+                                "karim",
+                                "elnaggar"),
+                        new CreditDto(
                                 "500",
                                 "EUR"
                         )
@@ -24,7 +40,7 @@ public class CreateAccountRequestDtoInstanceProvider {
                 new CreateAccountRequestDto(
                         "currentAccountId#1",
                         null,
-                        new InitialCreditDto(
+                        new CreditDto(
                                 "500",
                                 "EUR"
                         )
@@ -33,19 +49,34 @@ public class CreateAccountRequestDtoInstanceProvider {
                 // Initial credit is null
                 new CreateAccountRequestDto(
                         "currentAccountId#1",
-                        new CustomerIdentifierDto(
-                                "customerId#1"
-                        ),
+                        new CustomerDto(
+                                "customerId#1",
+                                "karim",
+                                "elnaggar"),
                         null
                 ),
 
                 // Current account id is empty
                 new CreateAccountRequestDto(
                         " ",
-                        new CustomerIdentifierDto(
-                                "customerId#1"
-                        ),
-                        new InitialCreditDto(
+                        new CustomerDto(
+                                "customerId#1",
+                                "karim",
+                                "elnaggar"),
+                        new CreditDto(
+                                "500",
+                                "EUR"
+                        )
+                ),
+
+                // Customer id is null
+                new CreateAccountRequestDto(
+                        "currentAccountId#1",
+                        new CustomerDto(
+                                null,
+                                "karim",
+                                "elnaggar"),
+                        new CreditDto(
                                 "500",
                                 "EUR"
                         )
@@ -54,10 +85,63 @@ public class CreateAccountRequestDtoInstanceProvider {
                 // Customer id is empty
                 new CreateAccountRequestDto(
                         "currentAccountId#1",
-                        new CustomerIdentifierDto(
-                                " "
-                        ),
-                        new InitialCreditDto(
+                        new CustomerDto(
+                                " ",
+                                "karim",
+                                "elnaggar"),
+                        new CreditDto(
+                                "500",
+                                "EUR"
+                        )
+                ),
+
+                // Customer first name is null
+                new CreateAccountRequestDto(
+                        "currentAccountId#1",
+                        new CustomerDto(
+                                "customerId#1",
+                                null,
+                                "elnaggar"),
+                        new CreditDto(
+                                "500",
+                                "EUR"
+                        )
+                ),
+
+                // Customer first name is empty
+                new CreateAccountRequestDto(
+                        "currentAccountId#1",
+                        new CustomerDto(
+                                "customerId#1",
+                                " ",
+                                "elnaggar"),
+                        new CreditDto(
+                                "500",
+                                "EUR"
+                        )
+                ),
+
+                // Customer surname is null
+                new CreateAccountRequestDto(
+                        "currentAccountId#1",
+                        new CustomerDto(
+                                "customerId#1",
+                                "karim",
+                                null),
+                        new CreditDto(
+                                "500",
+                                "EUR"
+                        )
+                ),
+
+                // Customer surname is empty
+                new CreateAccountRequestDto(
+                        "currentAccountId#1",
+                        new CustomerDto(
+                                "customerId#1",
+                                "karim",
+                                " "),
+                        new CreditDto(
                                 "500",
                                 "EUR"
                         )
@@ -66,10 +150,11 @@ public class CreateAccountRequestDtoInstanceProvider {
                 // Amount is empty
                 new CreateAccountRequestDto(
                         "currentAccountId#1",
-                        new CustomerIdentifierDto(
-                                "customerId#1"
-                        ),
-                        new InitialCreditDto(
+                        new CustomerDto(
+                                "customerId#1",
+                                "karim",
+                                "elnaggar"),
+                        new CreditDto(
                                 " ",
                                 "EUR"
                         )
@@ -78,10 +163,11 @@ public class CreateAccountRequestDtoInstanceProvider {
                 // Currency is empty
                 new CreateAccountRequestDto(
                         "currentAccountId#1",
-                        new CustomerIdentifierDto(
-                                "customerId#1"
-                        ),
-                        new InitialCreditDto(
+                        new CustomerDto(
+                                "customerId#1",
+                                "karim",
+                                "elnaggar"),
+                        new CreditDto(
                                 "500",
                                 " "
                         )
@@ -90,10 +176,11 @@ public class CreateAccountRequestDtoInstanceProvider {
                 // Amount is not a number
                 new CreateAccountRequestDto(
                         "currentAccountId#1",
-                        new CustomerIdentifierDto(
-                                "customerId#1"
-                        ),
-                        new InitialCreditDto(
+                        new CustomerDto(
+                                "customerId#1",
+                                "karim",
+                                "elnaggar"),
+                        new CreditDto(
                                 "AD",
                                 "EUR"
                         )
@@ -102,27 +189,14 @@ public class CreateAccountRequestDtoInstanceProvider {
                 // Currency is not a valid currency
                 new CreateAccountRequestDto(
                         "currentAccountId#1",
-                        new CustomerIdentifierDto(
-                                "customerId#1"
-                        ),
-                        new InitialCreditDto(
+                        new CustomerDto(
+                                "customerId#1",
+                                "karim",
+                                "elnaggar"),
+                        new CreditDto(
                                 "500",
                                 "EURR"
                         )
-                )
-        );
-    }
-
-    public static CreateAccountRequestDto createValidRequest() {
-
-        return new CreateAccountRequestDto(
-                "currentAccountId#1",
-                new CustomerIdentifierDto(
-                        "customerId#1"
-                ),
-                new InitialCreditDto(
-                        "500.05",
-                        "EUR"
                 )
         );
     }

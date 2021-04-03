@@ -1,6 +1,6 @@
 package com.karimelnaggar.currentaccounts.api.accounts;
 
-import com.karimelnaggar.currentaccounts.service.model.CreateAccountRequestModel;
+import com.karimelnaggar.currentaccounts.service.accounts.CreateAccountRequest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,15 +15,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @ExtendWith(MockitoExtension.class)
-class CreateAccountRequestModelFactoryUnitTests {
+class CreateAccountRequestFactoryUnitTests {
 
     @InjectMocks
     private CreateAccountRequestModelFactory createAccountRequestModelFactory;
 
     @ParameterizedTest
     @NullSource
-    @MethodSource("com.karimelnaggar.currentaccounts.api.accounts.CreateAccountRequestDtoInstanceProvider#createWithInvalidFields")
-    void newCreateAccountRequestModel_whenArgumentsAreInvalid_throwsIllegalArgumentException(final CreateAccountRequestDto request) {
+    @MethodSource("com.karimelnaggar.currentaccounts.api.accounts.CreateAccountRequestDtoInstanceProvider#createInvalidRequests")
+    void newCreateAccountRequestModel_whenArgumentsAreInvalid_throwsIllegalArgumentException(CreateAccountRequestDto request) {
 
         assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> createAccountRequestModelFactory.newCreateAccountRequestModel(request));
     }
@@ -33,7 +33,7 @@ class CreateAccountRequestModelFactoryUnitTests {
 
         final CreateAccountRequestDto requestDto = CreateAccountRequestDtoInstanceProvider.createValidRequest();
 
-        final CreateAccountRequestModel requestModel = createAccountRequestModelFactory.newCreateAccountRequestModel(requestDto);
+        final CreateAccountRequest requestModel = createAccountRequestModelFactory.newCreateAccountRequestModel(requestDto);
 
         assertThat(requestModel).isNotNull();
 
@@ -41,13 +41,16 @@ class CreateAccountRequestModelFactoryUnitTests {
 
         assertThat(requestModel.getCustomer()).isNotNull();
         assertThat(requestModel.getCustomer().getCustomerId()).isEqualTo(requestDto.getCustomer().getCustomerId());
+        assertThat(requestModel.getCustomer().getFirstName()).isEqualTo(requestDto.getCustomer().getFirstName());
+        assertThat(requestModel.getCustomer().getSurname()).isEqualTo(requestDto.getCustomer().getSurname());
+
 
         assertThat(requestModel.getInitialCredit()).isNotNull();
-        assertThat(requestModel.getInitialCredit().getMonetaryAmount()).isNotNull();
+        assertThat(requestModel.getInitialCredit().getBalance()).isNotNull();
 
-        assertThat(requestModel.getInitialCredit().getMonetaryAmount().getNumber().numberValue(BigDecimal.class))
+        assertThat(requestModel.getInitialCredit().getBalance().getNumber().numberValue(BigDecimal.class))
                 .isEqualByComparingTo(new BigDecimal(requestDto.getInitialCredit().getAmount()));
-        assertThat(requestModel.getInitialCredit().getMonetaryAmount().getCurrency().toString())
+        assertThat(requestModel.getInitialCredit().getBalance().getCurrency().toString())
                 .isEqualTo(requestDto.getInitialCredit().getCurrency());
     }
 }

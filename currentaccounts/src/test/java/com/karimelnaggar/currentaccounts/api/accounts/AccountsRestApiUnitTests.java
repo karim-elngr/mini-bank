@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doReturn;
 
 @ExtendWith(MockitoExtension.class)
 class AccountsRestApiUnitTests {
@@ -25,7 +25,7 @@ class AccountsRestApiUnitTests {
 
         final CreateAccountRequestDto request = CreateAccountRequestDtoInstanceProvider.createValidRequest();
 
-        final CreateAccountResponseDto expectedResponse = new CreateAccountResponseDto();
+        final CreateAccountResponseDto expectedResponse = CreateAccountResponseDtoInstanceProvider.createValidResponse();
         doReturn(expectedResponse).when(createAccountAdapter).createAccount(request);
 
         final ResponseEntity<CreateAccountResponseDto> response = accountsRestApi.createNewAccount(request);
