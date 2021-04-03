@@ -1,5 +1,7 @@
 package com.karimelnaggar.currentaccounts.service.accounts;
 
+import java.math.BigDecimal;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class AccountFactoryTestUtils {
@@ -11,6 +13,9 @@ public class AccountFactoryTestUtils {
 
         assertThat(account.getCustomer()).usingRecursiveComparison().isEqualTo(createAccountRequest.getCustomer());
 
-        assertThat(account.getCredit()).usingRecursiveComparison().isEqualTo(createAccountRequest.getInitialCredit());
+        assertThat(account.getCredit().getBalance().getCurrency().getCurrencyCode())
+                .isEqualTo(createAccountRequest.getInitialCredit().getBalance().getCurrency().getCurrencyCode());
+
+        assertThat(account.getCredit().getBalance().getNumberStripped()).isEqualByComparingTo(BigDecimal.ZERO);
     }
 }
