@@ -3,24 +3,20 @@ package com.karimelnaggar.currentaccounts.api.accounts;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.NumberFormat;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-class CreateAccountRequestDto {
+class CreditDto {
+
+    @NotNull
+    @NumberFormat
+    private String amount;
 
     @NotEmpty
-    private String currentAccountId;
-
-    @Valid
-    @NotNull
-    private CustomerDto customer;
-
-    @Valid
-    @NotNull
-    private CreditDto initialCredit;
+    private String currency;
 }

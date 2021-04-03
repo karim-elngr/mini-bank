@@ -1,9 +1,6 @@
 package com.karimelnaggar.currentaccounts.api.accounts;
 
-import com.karimelnaggar.currentaccounts.service.model.Account;
-import com.karimelnaggar.currentaccounts.service.accounts.CreateAccountFacade;
-import com.karimelnaggar.currentaccounts.service.model.CreateAccountRequestModel;
-import com.karimelnaggar.currentaccounts.service.accounts.CreateAccountRequestModelInstanceProvider;
+import com.karimelnaggar.currentaccounts.service.accounts.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -39,13 +36,13 @@ class CreateAccountAdapterImplUnitTests {
     void createAccount_whenArgumentsAreValid_createNewAccountAndReturnResponseDto() {
 
         final CreateAccountRequestDto requestDto = CreateAccountRequestDtoInstanceProvider.createValidRequest();
-        final CreateAccountRequestModel expectedRequestModel = CreateAccountRequestModelInstanceProvider.createValidModel();
+        final CreateAccountRequest expectedRequestModel = CreateAccountRequestInstanceProvider.createValidCreateAccountRequest();
         doReturn(expectedRequestModel).when(createAccountRequestModelFactory).newCreateAccountRequestModel(requestDto);
 
-        final Account expectedAccount = new Account();
+        final Account expectedAccount = AccountInstanceProvider.createValidAccount();
         doReturn(expectedAccount).when(createAccountFacade).createNewAccount(expectedRequestModel);
 
-        final CreateAccountResponseDto expectedResponse = new CreateAccountResponseDto();
+        final CreateAccountResponseDto expectedResponse = CreateAccountResponseDtoInstanceProvider.createValidResponse();
         doReturn(expectedResponse).when(createAccountResponseDtoFactory).newCreateAccountResponseDto(expectedAccount);
 
         final CreateAccountResponseDto actualResponse = createAccountAdapter.createAccount(requestDto);
