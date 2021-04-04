@@ -1,0 +1,63 @@
+{
+	"info": {
+		"_postman_id": "bddf84c1-4efe-4f8c-8664-6775f274788e",
+		"name": "current accounts",
+		"description": "A postman collection containing a smoke test for the current accounts API.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create a new current account",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"currentAccountId\": \"1\",\n    \"customer\": {\n        \"customerId\": \"1\",\n        \"firstName\": \"ahmed\",\n        \"surname\": \"ali\"\n    },\n    \"initialCredit\": {\n        \"amount\": \"300\",\n        \"currency\": \"EUR\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{CURRENT_ACCOUNTS_API_URL}}/accounts",
+					"protocol": "http",
+					"host": [
+						"{{CURRENT_ACCOUNTS_API_URL}}"
+					],
+					"path": [
+						"accounts"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "CURRENT_ACCOUNTS_API_URL",
+			"value": "localhost:9001"
+		}
+	]
+}
