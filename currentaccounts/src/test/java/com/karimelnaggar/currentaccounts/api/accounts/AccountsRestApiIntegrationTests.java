@@ -29,7 +29,7 @@ class AccountsRestApiIntegrationTests {
         final String jsonRequest = generateStringFromResource("payloads/create_account/valid_request.json");
 
         given().port(port).body(jsonRequest).contentType(JSON)
-                .when().post("/accounts")
+                .when().post("/customers/customer1/accounts")
                 .then()
                 .assertThat()
                 .statusCode(is(CREATED.value()))
@@ -42,7 +42,7 @@ class AccountsRestApiIntegrationTests {
         final String jsonRequest = generateStringFromResource("payloads/create_account/invalid_request_missing_account_id.json");
 
         given().port(port).body(jsonRequest).contentType(JSON)
-                .when().post("/accounts")
+                .when().post("/customers/customer1/accounts")
                 .then()
                 .assertThat()
                 .statusCode(is(BAD_REQUEST.value()));

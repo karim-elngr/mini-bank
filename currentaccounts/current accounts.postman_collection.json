@@ -21,12 +21,55 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{CURRENT_ACCOUNTS_API_URL}}/accounts",
+					"raw": "http://{{CURRENT_ACCOUNTS_API_URL}}/customers/customer1/accounts",
 					"protocol": "http",
 					"host": [
 						"{{CURRENT_ACCOUNTS_API_URL}}"
 					],
 					"path": [
+						"customers",
+						"customer1",
+						"accounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a current account",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{CURRENT_ACCOUNTS_API_URL}}/customers/customer1/accounts/account1",
+					"protocol": "http",
+					"host": [
+						"{{CURRENT_ACCOUNTS_API_URL}}"
+					],
+					"path": [
+						"customers",
+						"customer1",
+						"accounts",
+						"account1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all current accounts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{CURRENT_ACCOUNTS_API_URL}}/customers/customer1/accounts",
+					"protocol": "http",
+					"host": [
+						"{{CURRENT_ACCOUNTS_API_URL}}"
+					],
+					"path": [
+						"customers",
+						"customer1",
 						"accounts"
 					]
 				}

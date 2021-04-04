@@ -28,7 +28,10 @@ class AccountsRestApiUnitTests {
         final CreateAccountResponseDto expectedResponse = CreateAccountResponseDtoInstanceProvider.createValidResponse();
         doReturn(expectedResponse).when(createAccountAdapter).createAccount(request);
 
-        final ResponseEntity<CreateAccountResponseDto> response = accountsRestApi.createNewAccount(request);
+        final ResponseEntity<CreateAccountResponseDto> response = accountsRestApi.createNewAccount(
+                request.getCustomer().getCustomerId(),
+                request
+        );
 
         assertThat(response).isNotNull();
         assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.CREATED);

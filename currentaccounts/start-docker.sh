@@ -2,7 +2,7 @@
 
 bash download-opentracing-specialagent.sh
 
-mvn -B clean package
+mvn -B clean package -DskipTests
 
 docker-compose -f docker-compose-build.yaml build
 
