@@ -1,0 +1,31 @@
+version: "3"
+services:
+  currentaccounts:
+    image: karimelnaggar/currentaccounts:${CURRENTACCOUNTS_VERSION}
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker"
+    ports:
+      - 9001:9001
+    depends_on:
+      - currentaccounts-db
+
+  currentaccounts-db:
+    image: library/postgres:13.2-alpine
+    restart: always
+    healthcheck:
+      test: "pg_isready -U currentaccounts -d currentaccounts"
+      interval: 2s
+      timeout: 20s
+      retries: 10
+    environment:
+      POSTGRES_DB: currentaccounts
+      POSTGRES_USER: currentaccounts
+      POSTGRES_PASSWORD: currentaccounts
+
+  adminer:
+    image: adminer:4.8.0-standalone
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - currentaccounts-db
