@@ -3,6 +3,7 @@ package com.karimelnaggar.currentaccounts.persistence;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -11,6 +12,7 @@ import java.math.BigDecimal;
 @Embeddable
 @Data
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
 public class CreditEntity {
 

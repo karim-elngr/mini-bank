@@ -4,17 +4,19 @@ import com.karimelnaggar.currentaccounts.service.accounts.Account;
 import com.karimelnaggar.currentaccounts.service.accounts.Credit;
 import com.karimelnaggar.currentaccounts.service.accounts.Customer;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.util.Objects;
 
-import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkState;
 
 @Component
 class CreateAccountResponseDtoFactory {
 
     public CreateAccountResponseDto newCreateAccountResponseDto(Account account) {
 
-        checkArgument(Objects.nonNull(account), "account cannot be null");
+        checkState(Objects.nonNull(account), "account cannot be null");
+        checkState(StringUtils.hasText(account.getCurrentAccountId()), "current account id cannot be empty");
 
         return new CreateAccountResponseDto(
                 account.getCurrentAccountId(),
@@ -23,23 +25,27 @@ class CreateAccountResponseDtoFactory {
         );
     }
 
-    private CustomerDto createCustomerIdentifierDto(Customer customerModel) {
+    private CustomerDto createCustomerIdentifierDto(Customer customer) {
 
-        checkArgument(Objects.nonNull(customerModel), "customer cannot be null");
+        checkState(Objects.nonNull(customer), "customer cannot be null");
+        checkState(StringUtils.hasText(customer.getCustomerId()), "customer id cannot be empty");
+        checkState(StringUtils.hasText(customer.getFirstName()), "customer first name cannot be empty");
+        checkState(StringUtils.hasText(customer.getSurname()), "customer surname cannot be empty");
 
         return new CustomerDto(
-                customerModel.getCustomerId(),
-                customerModel.getFirstName(),
-                customerModel.getSurname()
+                customer.getCustomerId(),
+                customer.getFirstName(),
+                customer.getSurname()
         );
     }
 
     private CreditDto createInitialCreditDto(Credit credit) {
 
-        checkArgument(Objects.nonNull(credit), "balance cannot be null");
+        checkState(Objects.nonNull(credit), "credit cannot be null");
+        checkState(Objects.nonNull(credit.getBalance()), "credit balance cannot be null");
 
         return new CreditDto(
-                credit.getBalance().getNumber().toString(),
+                credit.getBalance().getNumberStripped().toString(),
                 credit.getBalance().getCurrency().toString()
         );
     }

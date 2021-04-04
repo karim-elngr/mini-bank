@@ -19,6 +19,7 @@ public class CreditEntityInstanceProvider {
     public static List<CreditEntity> createInvalidCredits() {
 
         return List.of(
+                new CreditEntity(),
                 new CreditEntity(null, CURRENCY_CODE),
                 new CreditEntity(AMOUNT, null),
                 new CreditEntity(AMOUNT, StringUtils.EMPTY)

@@ -7,7 +7,7 @@ import org.javamoney.moneta.Money;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import javax.money.Monetary;
+import javax.money.UnknownCurrencyException;
 import java.util.Objects;
 
 import static com.google.common.base.Preconditions.checkState;
@@ -44,14 +44,20 @@ public class AccountModelConverter {
 
         checkState(Objects.nonNull(creditEntity), "credit cannot be null");
         checkState(Objects.nonNull(creditEntity.getAmount()), "amount cannot be null");
-        checkState(Objects.nonNull(creditEntity.getAmount()) &&
-                Monetary.isCurrencyAvailable(creditEntity.getCurrency()), "currency cannot be null or invalid");
+        checkState(Objects.nonNull(creditEntity.getCurrency()), "currency cannot be null");
 
-        final Money balance = Money.of(
-                creditEntity.getAmount(),
-                creditEntity.getCurrency()
-        );
+        try {
 
-        return new Credit(balance);
+            final Money balance = Money.of(
+                    creditEntity.getAmount(),
+                    creditEntity.getCurrency()
+            );
+
+            return new Credit(balance);
+
+        } catch (final UnknownCurrencyException exception) {
+
+            throw new IllegalStateException("unexpected unknown currency", exception);
+        }
     }
 }

@@ -27,6 +27,8 @@ public class AccountEntityInstanceProvider {
 
         final ArrayList<AccountEntity> invalidAccounts = new ArrayList<>();
 
+        invalidAccounts.add(new AccountEntity());
+
         // Current account id is null or is empty
 
         invalidAccounts.add(new AccountEntity(

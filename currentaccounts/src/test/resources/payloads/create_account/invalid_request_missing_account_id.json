@@ -1,0 +1,11 @@
+{
+  "customer": {
+    "customerId": "1",
+    "firstName": "ahmed",
+    "surname": "ali"
+  },
+  "initialCredit": {
+    "amount": "300",
+    "currency": "EUR"
+  }
+}
