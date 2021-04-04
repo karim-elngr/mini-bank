@@ -11,14 +11,14 @@ import java.util.Objects;
 import static com.google.common.base.Preconditions.checkState;
 
 @Component
-class CreateAccountResponseDtoFactory {
+class AccountResponseDtoFactory {
 
-    public CreateAccountResponseDto newCreateAccountResponseDto(Account account) {
+    public AccountResponseDto createAccountResponseDto(Account account) {
 
         checkState(Objects.nonNull(account), "account cannot be null");
         checkState(StringUtils.hasText(account.getCurrentAccountId()), "current account id cannot be empty");
 
-        return new CreateAccountResponseDto(
+        return new AccountResponseDto(
                 account.getCurrentAccountId(),
                 createCustomerIdentifierDto(account.getCustomer()),
                 createInitialCreditDto(account.getCredit())

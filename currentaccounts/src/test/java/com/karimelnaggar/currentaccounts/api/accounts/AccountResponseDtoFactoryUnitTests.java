@@ -14,25 +14,25 @@ import static com.karimelnaggar.currentaccounts.api.accounts.CreateAccountRespon
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @ExtendWith(MockitoExtension.class)
-class CreateAccountResponseDtoFactoryUnitTests {
+class AccountResponseDtoFactoryUnitTests {
 
     @InjectMocks
-    private CreateAccountResponseDtoFactory createAccountResponseDtoFactory;
+    private AccountResponseDtoFactory accountResponseDtoFactory;
 
     @ParameterizedTest
     @NullSource
     @MethodSource("com.karimelnaggar.currentaccounts.service.accounts.AccountInstanceProvider#createInvalidAccounts")
-    void newCreateAccountResponseDto_whenArgumentsAreInvalid_throwsIllegalStateException(Account account) {
+    void createAccountResponseDto_whenArgumentsAreInvalid_throwsIllegalStateException(Account account) {
 
-        assertThatExceptionOfType(IllegalStateException.class).isThrownBy(() -> createAccountResponseDtoFactory.newCreateAccountResponseDto(account));
+        assertThatExceptionOfType(IllegalStateException.class).isThrownBy(() -> accountResponseDtoFactory.createAccountResponseDto(account));
     }
 
     @Test
-    void newCreateAccountResponseDto_whenArgumentsValid_returnsCorrectCreateAccountResponseDto() {
+    void createAccountResponseDto_whenArgumentsValid_returnsCorrectAccountResponseDto() {
 
         final Account account = AccountInstanceProvider.createValidAccount();
 
-        final CreateAccountResponseDto responseDto = createAccountResponseDtoFactory.newCreateAccountResponseDto(account);
+        final AccountResponseDto responseDto = accountResponseDtoFactory.createAccountResponseDto(account);
 
         assertCreateAccountResponseDtoIsCreatedFromAccount(responseDto, account);
     }

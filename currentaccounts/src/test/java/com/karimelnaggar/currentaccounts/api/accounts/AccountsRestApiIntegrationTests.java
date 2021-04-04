@@ -23,6 +23,13 @@ class AccountsRestApiIntegrationTests {
     @LocalServerPort
     private int port;
 
+    private static String generateStringFromResource(String path) throws IOException {
+
+        final Resource resource = new ClassPathResource(path);
+
+        return new String(resource.getInputStream().readAllBytes());
+    }
+
     @Test
     public void createNewAccount_whenRequestIsValid_respondsWithACreatedAccount() throws IOException {
 
@@ -46,12 +53,5 @@ class AccountsRestApiIntegrationTests {
                 .then()
                 .assertThat()
                 .statusCode(is(BAD_REQUEST.value()));
-    }
-
-    private static String generateStringFromResource(String path) throws IOException {
-
-        final Resource resource = new ClassPathResource(path);
-
-        return new String(resource.getInputStream().readAllBytes());
     }
 }

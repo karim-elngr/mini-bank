@@ -18,17 +18,17 @@ class AccountsRestApiUnitTests {
     private AccountsRestApi accountsRestApi;
 
     @Mock
-    private CreateAccountAdapter createAccountAdapter;
+    private AccountsServiceAdapter accountsServiceAdapter;
 
     @Test
     void createNewAccount_whenArgumentsAreValid_createNewAccountAndReturnCreatedStatusCode() {
 
         final CreateAccountRequestDto request = CreateAccountRequestDtoInstanceProvider.createValidRequest();
 
-        final CreateAccountResponseDto expectedResponse = CreateAccountResponseDtoInstanceProvider.createValidResponse();
-        doReturn(expectedResponse).when(createAccountAdapter).createAccount(request);
+        final AccountResponseDto expectedResponse = CreateAccountResponseDtoInstanceProvider.createValidResponse();
+        doReturn(expectedResponse).when(accountsServiceAdapter).createAccount(request);
 
-        final ResponseEntity<CreateAccountResponseDto> response = accountsRestApi.createNewAccount(
+        final ResponseEntity<AccountResponseDto> response = accountsRestApi.createNewAccount(
                 request.getCustomer().getCustomerId(),
                 request
         );

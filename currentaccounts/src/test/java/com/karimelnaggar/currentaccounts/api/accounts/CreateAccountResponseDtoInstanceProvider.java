@@ -2,8 +2,8 @@ package com.karimelnaggar.currentaccounts.api.accounts;
 
 public class CreateAccountResponseDtoInstanceProvider {
 
-    public static CreateAccountResponseDto createValidResponse() {
+    public static AccountResponseDto createValidResponse() {
 
-        return new CreateAccountResponseDto();
+        return new AccountResponseDto();
     }
 }

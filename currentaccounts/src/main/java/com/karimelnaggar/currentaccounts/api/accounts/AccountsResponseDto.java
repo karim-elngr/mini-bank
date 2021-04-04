@@ -4,14 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-class CreateAccountResponseDto {
+public class AccountsResponseDto {
 
-    private String currentAccountId;
-
-    private CustomerDto customer;
-
-    private CreditDto credit;
+    private List<AccountResponseDto> accounts;
 }

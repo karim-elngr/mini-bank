@@ -21,14 +21,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{CURRENT_ACCOUNTS_API_URL}}/customers/customer1/accounts",
+					"raw": "http://{{CURRENT_ACCOUNTS_API_URL}}/customers/1/accounts",
 					"protocol": "http",
 					"host": [
 						"{{CURRENT_ACCOUNTS_API_URL}}"
 					],
 					"path": [
 						"customers",
-						"customer1",
+						"1",
 						"accounts"
 					]
 				}
@@ -41,16 +41,16 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{CURRENT_ACCOUNTS_API_URL}}/customers/customer1/accounts/account1",
+					"raw": "http://{{CURRENT_ACCOUNTS_API_URL}}/customers/1/accounts/1",
 					"protocol": "http",
 					"host": [
 						"{{CURRENT_ACCOUNTS_API_URL}}"
 					],
 					"path": [
 						"customers",
-						"customer1",
+						"1",
 						"accounts",
-						"account1"
+						"1"
 					]
 				}
 			},
@@ -62,14 +62,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{CURRENT_ACCOUNTS_API_URL}}/customers/customer1/accounts",
+					"raw": "http://{{CURRENT_ACCOUNTS_API_URL}}/customers/1/accounts",
 					"protocol": "http",
 					"host": [
 						"{{CURRENT_ACCOUNTS_API_URL}}"
 					],
 					"path": [
 						"customers",
-						"customer1",
+						"1",
 						"accounts"
 					]
 				}

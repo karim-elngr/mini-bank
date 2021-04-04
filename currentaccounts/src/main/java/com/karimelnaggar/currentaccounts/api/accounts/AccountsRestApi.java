@@ -14,30 +14,34 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 class AccountsRestApi {
 
-    private final CreateAccountAdapter createAccountAdapter;
+    private final AccountsServiceAdapter accountsServiceAdapter;
 
     @PostMapping
-    public ResponseEntity<CreateAccountResponseDto> createNewAccount(
+    public ResponseEntity<AccountResponseDto> createNewAccount(
             @Valid @NotEmpty @PathVariable("customerId") String customerId,
             @Valid @NotNull @RequestBody CreateAccountRequestDto request
     ) {
-        final CreateAccountResponseDto createAccountResponseDto = createAccountAdapter.createAccount(request);
+        final AccountResponseDto accountResponseDto = accountsServiceAdapter.createAccount(request);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(createAccountResponseDto);
-    }
-
-    @GetMapping
-    public ResponseEntity<CreateAccountResponseDto> getCurrentAccounts(
-            @Valid @NotEmpty @PathVariable("customerId") String customerId
-    ) {
-        return ResponseEntity.ok(new CreateAccountResponseDto());
+        return ResponseEntity.status(HttpStatus.CREATED).body(accountResponseDto);
     }
 
     @GetMapping("/{currentAccountId}")
-    public ResponseEntity<CreateAccountResponseDto> getCurrentAccount(
+    public ResponseEntity<AccountResponseDto> getCurrentAccount(
             @Valid @NotEmpty @PathVariable("customerId") String customerId,
             @Valid @NotEmpty @PathVariable("currentAccountId") String currentAccountId
     ) {
-        return ResponseEntity.ok(new CreateAccountResponseDto());
+        final AccountResponseDto accountResponseDto = accountsServiceAdapter.getAccount(currentAccountId);
+
+        return ResponseEntity.ok(accountResponseDto);
+    }
+
+    @GetMapping
+    public ResponseEntity<AccountsResponseDto> getCurrentAccountsForCustomer(
+            @Valid @NotEmpty @PathVariable("customerId") String customerId
+    ) {
+        final AccountsResponseDto accountsResponse = accountsServiceAdapter.getAllAccountsForCustomer(customerId);
+
+        return ResponseEntity.ok(accountsResponse);
     }
 }

@@ -1,9 +1,13 @@
 version: "3"
 services:
   currentaccounts:
-    image: karimelnaggar/currentaccounts:${CURRENTACCOUNTS_VERSION}
+    image: karimelnaggar/currentaccounts:${CURRENTACCOUNTS_VERSION}-tracing
     environment:
-      - "SPRING_PROFILES_ACTIVE=docker"
+      - SPRING_PROFILES_ACTIVE=docker
+      - OTEL_TRACES_EXPORTER=jaeger
+      - OTEL_EXPORTER_JAEGER_ENDPOINT=http://jaeger:14250
+      - OTEL_RESOURCE_ATTRIBUTES=service.name=currentaccounts
+      - OTEL_TRACES_SAMPLER=always_on
     ports:
       - 9001:9001
     depends_on:
@@ -29,3 +33,8 @@ services:
       - 8080:8080
     depends_on:
       - currentaccounts-db
+
+  jaeger:
+    image: jaegertracing/all-in-one:1.22.0
+    ports:
+      - 16686:16686

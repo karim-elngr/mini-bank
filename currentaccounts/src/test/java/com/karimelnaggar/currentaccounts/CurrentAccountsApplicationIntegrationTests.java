@@ -11,12 +11,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ActiveProfiles("test")
 class CurrentAccountsApplicationIntegrationTests {
 
-	@Autowired
-	private CurrentAccountsApplication currentAccountsApplication;
+    @Autowired
+    private CurrentAccountsApplication currentAccountsApplication;
 
-	@Test
-	void contextLoads() {
+    @Test
+    void contextLoads() {
 
-		assertThat(currentAccountsApplication).isNotNull();
-	}
+        assertThat(currentAccountsApplication).isNotNull();
+    }
 }
