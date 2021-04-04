@@ -10,7 +10,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(
-        name="accounts",
+        name = "accounts",
         indexes = {
                 @Index(name = "customer_id_index", columnList = "customer_id")
         })
@@ -21,11 +21,11 @@ import javax.persistence.*;
 public class AccountEntity {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @NaturalId
-    @Column(name="current_account_id", length=16, nullable=false, unique=true)
+    @Column(name = "current_account_id", length = 16, nullable = false, unique = true)
     private String currentAccountId;
 
     @Embedded

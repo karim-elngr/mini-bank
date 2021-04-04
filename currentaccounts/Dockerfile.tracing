@@ -1,6 +1,6 @@
 ARG CURRENTACCOUNTS_VERSION
 FROM karimelnaggar/currentaccounts:${CURRENTACCOUNTS_VERSION}
 
-COPY opentracing-specialagent-1.7.4.jar .
+COPY opentelemetry-javaagent-all.jar .
 
-CMD ["sh", "-c", "java -javaagent:opentracing-specialagent-1.7.4.jar -jar currentaccounts-${CURRENTACCOUNTS_VERSION}.jar"]
+CMD ["sh", "-c", "java -javaagent:opentelemetry-javaagent-all.jar -jar currentaccounts-${CURRENTACCOUNTS_VERSION}.jar"]

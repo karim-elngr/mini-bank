@@ -4,11 +4,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class CreateAccountFacadeImpl implements CreateAccountFacade {
+public class AccountsFacadeImpl implements AccountsFacade {
 
     private final AccountsFactory accountsFactory;
     private final AccountsPersistenceService accountsPersistenceService;
@@ -27,5 +28,19 @@ public class CreateAccountFacadeImpl implements CreateAccountFacade {
         final Account unsafeAccount = accountsFactory.createNewAccount(createAccountRequest);
 
         return accountsPersistenceService.persist(unsafeAccount);
+    }
+
+    @Override
+    @Transactional
+    public Optional<Account> getAccount(String currentAccountId) {
+
+        return accountsPersistenceService.findAccount(currentAccountId);
+    }
+
+    @Override
+    @Transactional
+    public List<Account> getAllAccounts(String customerId) {
+
+        return accountsPersistenceService.findAllAccounts(customerId);
     }
 }

@@ -16,9 +16,9 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class CreditEntity {
 
-    @Column(name="amount", nullable=false)
+    @Column(name = "amount", nullable = false)
     private BigDecimal amount;
 
-    @Column(name="currency", length=3, nullable=false)
+    @Column(name = "currency", length = 3, nullable = false)
     private String currency;
 }

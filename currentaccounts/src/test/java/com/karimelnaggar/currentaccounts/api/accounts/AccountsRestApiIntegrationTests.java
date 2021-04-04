@@ -23,13 +23,20 @@ class AccountsRestApiIntegrationTests {
     @LocalServerPort
     private int port;
 
+    private static String generateStringFromResource(String path) throws IOException {
+
+        final Resource resource = new ClassPathResource(path);
+
+        return new String(resource.getInputStream().readAllBytes());
+    }
+
     @Test
     public void createNewAccount_whenRequestIsValid_respondsWithACreatedAccount() throws IOException {
 
         final String jsonRequest = generateStringFromResource("payloads/create_account/valid_request.json");
 
         given().port(port).body(jsonRequest).contentType(JSON)
-                .when().post("/accounts")
+                .when().post("/customers/customer1/accounts")
                 .then()
                 .assertThat()
                 .statusCode(is(CREATED.value()))
@@ -42,16 +49,9 @@ class AccountsRestApiIntegrationTests {
         final String jsonRequest = generateStringFromResource("payloads/create_account/invalid_request_missing_account_id.json");
 
         given().port(port).body(jsonRequest).contentType(JSON)
-                .when().post("/accounts")
+                .when().post("/customers/customer1/accounts")
                 .then()
                 .assertThat()
                 .statusCode(is(BAD_REQUEST.value()));
-    }
-
-    private static String generateStringFromResource(String path) throws IOException {
-
-        final Resource resource = new ClassPathResource(path);
-
-        return new String(resource.getInputStream().readAllBytes());
     }
 }

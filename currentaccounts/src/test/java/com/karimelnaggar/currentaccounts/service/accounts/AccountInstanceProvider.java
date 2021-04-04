@@ -25,8 +25,8 @@ public class AccountInstanceProvider {
         // Current account id is null or is empty
 
         invalidAccounts.add(new Account(null,
-                        CustomerInstanceProvider.createValidCustomer(),
-                        CreditInstanceProvider.createValidCredit()));
+                CustomerInstanceProvider.createValidCustomer(),
+                CreditInstanceProvider.createValidCredit()));
 
         invalidAccounts.add(new Account(StringUtils.EMPTY,
                 CustomerInstanceProvider.createValidCustomer(),

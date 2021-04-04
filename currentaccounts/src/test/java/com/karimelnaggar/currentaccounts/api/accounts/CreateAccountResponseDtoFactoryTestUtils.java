@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class CreateAccountResponseDtoFactoryTestUtils {
 
-    public static void assertCreateAccountResponseDtoIsCreatedFromAccount(CreateAccountResponseDto responseDto, Account account) {
+    public static void assertCreateAccountResponseDtoIsCreatedFromAccount(AccountResponseDto responseDto, Account account) {
 
         assertThat(responseDto).isNotNull();
         assertThat(responseDto.getCurrentAccountId()).isEqualTo(account.getCurrentAccountId());
