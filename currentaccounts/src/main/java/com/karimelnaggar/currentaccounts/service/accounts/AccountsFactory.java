@@ -4,7 +4,6 @@ import org.javamoney.moneta.Money;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import javax.money.UnknownCurrencyException;
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -47,13 +46,6 @@ class AccountsFactory {
         checkArgument(Objects.nonNull(initialCredit), "initial credit cannot be null");
         checkArgument(Objects.nonNull(initialCredit.getBalance()), "initial credit balance cannot be null");
 
-        try {
-
-            return new Credit(Money.of(BigDecimal.ZERO, initialCredit.getBalance().getCurrency()));
-
-        } catch (final UnknownCurrencyException exception) {
-
-            throw new IllegalArgumentException("currency is not a valid currency", exception);
-        }
+        return new Credit(Money.of(BigDecimal.ZERO, initialCredit.getBalance().getCurrency()));
     }
 }

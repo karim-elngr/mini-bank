@@ -23,6 +23,9 @@ public class CreateAccountRequestDtoInstanceProvider {
 
         return List.of(
 
+                // Empty request
+                new CreateAccountRequestDto(),
+
                 // Current account id is null
                 new CreateAccountRequestDto(
                         null,
@@ -63,6 +66,16 @@ public class CreateAccountRequestDtoInstanceProvider {
                                 "customerId#1",
                                 "karim",
                                 "elnaggar"),
+                        new CreditDto(
+                                "500",
+                                "EUR"
+                        )
+                ),
+
+                // Customer is empty
+                new CreateAccountRequestDto(
+                        "currentAccountId#1",
+                        new CustomerDto(),
                         new CreditDto(
                                 "500",
                                 "EUR"
@@ -145,6 +158,16 @@ public class CreateAccountRequestDtoInstanceProvider {
                                 "500",
                                 "EUR"
                         )
+                ),
+
+                // Credit is empty
+                new CreateAccountRequestDto(
+                        "currentAccountId#1",
+                        new CustomerDto(
+                                "customerId#1",
+                                "karim",
+                                "elnaggar"),
+                        new CreditDto()
                 ),
 
                 // Amount is empty

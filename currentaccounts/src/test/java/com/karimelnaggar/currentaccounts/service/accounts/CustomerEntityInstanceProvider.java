@@ -23,6 +23,7 @@ public class CustomerEntityInstanceProvider {
     public static List<CustomerEntity> createInvalidCustomers() {
 
         return List.of(
+                new CustomerEntity(),
                 // Customer id is null or empty
                 new CustomerEntity(
                         null,

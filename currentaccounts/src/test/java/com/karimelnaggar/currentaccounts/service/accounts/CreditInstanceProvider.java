@@ -8,6 +8,7 @@ import java.util.List;
 public class CreditInstanceProvider {
 
     private static final String CURRENCY_CODE = "EUR";
+    private static final String INVALID_CURRENCY_CODE = "ZZZ";
     private static final BigDecimal AMOUNT = BigDecimal.TEN;
 
     public static Credit createValidCredit() {
