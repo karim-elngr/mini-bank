@@ -6,6 +6,9 @@
 A sample banking app, providing minimal functionality
 
 ## Build project `currentaccounts`
+
+<hr>
+
 ### Step by step option
 1. Run build using maven
 ```
@@ -23,12 +26,19 @@ docker-compose -f docker-compose-build.yaml build
 ```
 docker-compose -f docker-compose.yaml up -d   
 ```
-### Script to run all steps
-1. Run the following script alternatively to accomplish the same result
+### Alternatively there is a script to run all steps
+1. Run the following script to accomplish the same result
 ```
 ./start-docker.sh
 ```
 
+<hr>
+
 ## Test using postman
 1. Import the postman collection located inside the `currentaccounts` directory
 2. Execute requests against the `currentaccounts` REST API
+
+<hr>
+
+## View tracing data
+1. Visit [http://localhost:16686/search](http://localhost:16686/search) and observe tracing data using Jaeger UI
