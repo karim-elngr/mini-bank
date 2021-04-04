@@ -1,0 +1,18 @@
+version: "3"
+services:
+  currentaccounts:
+    image: karimelnaggar/currentaccounts:${CURRENTACCOUNTS_VERSION}
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        CURRENTACCOUNTS_VERSION: ${CURRENTACCOUNTS_VERSION}
+  currentaccounts-tracing:
+    image: karimelnaggar/currentaccounts:${CURRENTACCOUNTS_VERSION}-tracing
+    build:
+      context: .
+      dockerfile: Dockerfile.tracing
+      args:
+        CURRENTACCOUNTS_VERSION: ${CURRENTACCOUNTS_VERSION}
+    depends_on:
+      - currentaccounts

@@ -1,7 +1,10 @@
 FROM openjdk:11-jre-slim
 
+ARG CURRENTACCOUNTS_VERSION
+ENV CURRENTACCOUNTS_VERSION=${CURRENTACCOUNTS_VERSION}
+
 WORKDIR application
 
-COPY target/currentaccounts-*.jar .
+COPY target/currentaccounts-${CURRENTACCOUNTS_VERSION}.jar .
 
-ENTRYPOINT java -jar currentaccounts-*.jar
+CMD ["sh", "-c", "java -jar currentaccounts-${CURRENTACCOUNTS_VERSION}.jar"]
