@@ -7,6 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Optional;
 
 import static com.karimelnaggar.currentaccounts.api.accounts.CreateAccountResponseDtoFactoryTestUtils.assertCreateAccountResponseDtoIsCreatedFromAccount;
@@ -77,5 +78,35 @@ class AccountsServiceAdapterImplUnitTests {
         doReturn(Optional.empty()).when(accountsFacade).getAccount(accountId);
 
         assertThatExceptionOfType(CurrentAccountNotFoundException.class).isThrownBy(() -> createAccountAdapter.getAccount(accountId));
+    }
+
+    @Test
+    void getAllAccountsForCustomer_whenCustomerHaveAccounts_returnsAListOfAccounts() {
+
+        final String customerId = "id#1";
+
+        final Account expectedAccount = AccountInstanceProvider.createValidAccount();
+        doReturn(List.of(expectedAccount)).when(accountsFacade).getAllAccounts(customerId);
+
+        doCallRealMethod().when(accountResponseDtoFactory).createAccountResponseDto(expectedAccount);
+
+        final AccountsResponseDto responseDto = createAccountAdapter.getAllAccountsForCustomer(customerId);
+
+        assertThat(responseDto).isNotNull();
+        assertThat(responseDto.getAccounts()).isNotEmpty();
+        assertThat(responseDto.getAccounts().get(0)).satisfies(response -> assertCreateAccountResponseDtoIsCreatedFromAccount(response, expectedAccount));
+    }
+
+    @Test
+    void getAllAccountsForCustomer_whenCustomerDoesNotHaveAccounts_returnsEmptyList() {
+
+        final String customerId = "id#1";
+
+        doReturn(List.of()).when(accountsFacade).getAllAccounts(customerId);
+
+        final AccountsResponseDto responseDto = createAccountAdapter.getAllAccountsForCustomer(customerId);
+
+        assertThat(responseDto).isNotNull();
+        assertThat(responseDto.getAccounts()).isEmpty();
     }
 }
