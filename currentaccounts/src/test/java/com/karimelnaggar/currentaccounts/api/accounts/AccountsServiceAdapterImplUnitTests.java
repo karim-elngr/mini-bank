@@ -7,8 +7,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
+import static com.karimelnaggar.currentaccounts.api.accounts.CreateAccountResponseDtoFactoryTestUtils.assertCreateAccountResponseDtoIsCreatedFromAccount;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.doReturn;
 
 @ExtendWith(MockitoExtension.class)
@@ -48,5 +52,30 @@ class AccountsServiceAdapterImplUnitTests {
         final AccountResponseDto actualResponse = createAccountAdapter.createAccount(requestDto);
 
         assertThat(actualResponse).isEqualTo(expectedResponse);
+    }
+
+    @Test
+    void getAccount_whenAccountExists_returnsAccountResponseDto() {
+
+        final String accountId = "id#1";
+
+        final Account expectedAccount = AccountInstanceProvider.createValidAccount();
+        doReturn(Optional.of(expectedAccount)).when(accountsFacade).getAccount(accountId);
+
+        doCallRealMethod().when(accountResponseDtoFactory).createAccountResponseDto(expectedAccount);
+
+        final AccountResponseDto actualResponse = createAccountAdapter.getAccount(accountId);
+
+        assertThat(actualResponse).satisfies(response -> assertCreateAccountResponseDtoIsCreatedFromAccount(response, expectedAccount));
+    }
+
+    @Test
+    void getAccount_whenAccountDoesNotExists_throwsCurrentAccountNotFoundException() {
+
+        final String accountId = "id#1";
+
+        doReturn(Optional.empty()).when(accountsFacade).getAccount(accountId);
+
+        assertThatExceptionOfType(CurrentAccountNotFoundException.class).isThrownBy(() -> createAccountAdapter.getAccount(accountId));
     }
 }
