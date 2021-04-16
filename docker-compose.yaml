@@ -1,0 +1,92 @@
+version: "3"
+services:
+  currentaccounts:
+    image: karimelnaggar/currentaccounts:${CURRENTACCOUNTS_VERSION}-tracing
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - OTEL_TRACES_EXPORTER=jaeger
+      - OTEL_METRICS_EXPORTER=none
+      - OTEL_EXPORTER_JAEGER_ENDPOINT=http://jaeger:14250
+      - OTEL_RESOURCE_ATTRIBUTES=service.name=currentaccounts
+      - OTEL_TRACES_SAMPLER=always_on
+    ports:
+      - 9001:9001
+    depends_on:
+      - currentaccounts-db
+
+  currentaccounts-db:
+    image: debezium/postgres
+    restart: always
+    healthcheck:
+      test: "pg_isready -U currentaccounts -d currentaccounts"
+      interval: 2s
+      timeout: 20s
+      retries: 10
+    environment:
+      POSTGRES_DB: currentaccounts
+      POSTGRES_USER: currentaccounts
+      POSTGRES_PASSWORD: currentaccounts
+    volumes:
+      - ./init-current-accounts.sql:/docker-entrypoint-initdb.d/init.sql
+
+  adminer:
+    image: adminer:4.8.0-standalone
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - currentaccounts-db
+
+  jaeger:
+    image: jaegertracing/all-in-one:1.22.0
+    ports:
+      - 16686:16686
+
+  zookeeper:
+    image: debezium/zookeeper:${DEBEZIUM_VERSION}
+
+  kafka:
+    image: debezium/kafka:${DEBEZIUM_VERSION}
+    links:
+      - zookeeper
+    environment:
+      - ZOOKEEPER_CONNECT=zookeeper:2181
+
+  kafdrop:
+    image: obsidiandynamics/kafdrop
+    ports:
+      - "9000:9000"
+    environment:
+      KAFKA_BROKERCONNECT: "kafka:9092"
+      JVM_OPTS: "-Xms16M -Xmx48M -Xss180K -XX:-TieredCompilation -XX:+UseStringDeduplication -noverify"
+    depends_on:
+      - "kafka"
+
+  connect:
+    image: karimelnaggar/strimzi-connect
+    environment:
+      - KAFKA_LOG4J_OPTS=-Dlog4j.configuration=file:/opt/kafka/config/connect-log4j.properties
+      - KAFKA_CONNECT_BOOTSTRAP_SERVERS=kafka:9092
+      - |
+        KAFKA_CONNECT_CONFIGURATION=
+        key.converter=org.apache.kafka.connect.json.JsonConverter
+        value.converter=org.apache.kafka.connect.json.JsonConverter
+        key.converter.schemas.enable=false
+        value.converter.schemas.enable=false
+        group.id=connect
+        offset.storage.topic=connect-offsets
+        offset.storage.replication.factor=1
+        config.storage.topic=connect-configs
+        config.storage.replication.factor=1
+        status.storage.topic=connect-status
+        status.storage.replication.factor=1
+        consumer.interceptor.classes=io.opentracing.contrib.kafka.TracingConsumerInterceptor
+        producer.interceptor.classes=io.opentracing.contrib.kafka.TracingProducerInterceptor
+      - JAEGER_SERVICE_NAME=kafka-connect
+      - JAEGER_AGENT_HOST=jaeger
+      - JAEGER_SAMPLER_TYPE=const
+      - JAEGER_SAMPLER_PARAM=1
+      - STRIMZI_TRACING=jaeger
+    command: /opt/kafka/kafka_connect_run.sh
+    ports:
+      - 8083:8083

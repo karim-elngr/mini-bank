@@ -1,5 +1,7 @@
 package com.karimelnaggar.currentaccounts.service.accounts;
 
+import com.karimelnaggar.currentaccounts.service.transactions.Transaction;
+import com.karimelnaggar.currentaccounts.service.transactions.TransactionsPlacementService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,8 @@ public class AccountsFacadeImpl implements AccountsFacade {
 
     private final AccountsFactory accountsFactory;
     private final AccountsPersistenceService accountsPersistenceService;
+    private final TransactionsFactory transactionsFactory;
+    private final TransactionsPlacementService transactionsPlacementService;
 
     @Override
     @Transactional
@@ -26,8 +30,15 @@ public class AccountsFacadeImpl implements AccountsFacade {
         }
 
         final Account unsafeAccount = accountsFactory.createNewAccount(createAccountRequest);
+        final Account persistedAccount = accountsPersistenceService.persist(unsafeAccount);
 
-        return accountsPersistenceService.persist(unsafeAccount);
+        final Transaction topUpTransaction = transactionsFactory.createTopUpTransaction(
+                persistedAccount,
+                createAccountRequest
+        );
+        transactionsPlacementService.placeNewTransaction(topUpTransaction);
+
+        return persistedAccount;
     }
 
     @Override
