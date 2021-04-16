@@ -1,5 +1,6 @@
 package com.karimelnaggar.currentaccounts.service.accounts;
 
+import com.karimelnaggar.currentaccounts.service.transactions.TransactionsPlacementService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -23,6 +24,12 @@ class AccountsFacadeImplUnitTests {
 
     @Mock
     private AccountsPersistenceService accountsPersistenceService;
+
+    @Mock
+    private TransactionsFactory transactionsFactory;
+
+    @Mock
+    private TransactionsPlacementService transactionsPlacementService;
 
     @Test
     void createNewAccount_whenAccountAlreadyExists_returnExistingAccount() {

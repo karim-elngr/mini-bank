@@ -3,16 +3,21 @@ services:
   currentaccounts:
     image: karimelnaggar/currentaccounts:${CURRENTACCOUNTS_VERSION}
     build:
-      context: .
+      context: currentaccounts
       dockerfile: Dockerfile
       args:
         CURRENTACCOUNTS_VERSION: ${CURRENTACCOUNTS_VERSION}
   currentaccounts-tracing:
     image: karimelnaggar/currentaccounts:${CURRENTACCOUNTS_VERSION}-tracing
     build:
-      context: .
+      context: currentaccounts
       dockerfile: Dockerfile.tracing
       args:
         CURRENTACCOUNTS_VERSION: ${CURRENTACCOUNTS_VERSION}
     depends_on:
       - currentaccounts
+
+  strimzi-connect:
+    image: karimelnaggar/strimzi-connect
+    build:
+      context: debezium-strimzi-kafka

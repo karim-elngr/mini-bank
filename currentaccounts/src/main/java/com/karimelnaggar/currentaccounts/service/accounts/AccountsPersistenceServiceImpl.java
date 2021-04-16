@@ -5,9 +5,9 @@ import com.karimelnaggar.currentaccounts.persistence.AccountRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -18,6 +18,7 @@ class AccountsPersistenceServiceImpl implements AccountsPersistenceService {
     private final AccountModelConverter accountModelConverter;
 
     @Override
+    @Transactional
     public Account persist(Account account) {
 
         final AccountEntity accountEntity = accountEntityConverter.toEntity(account);
@@ -28,6 +29,7 @@ class AccountsPersistenceServiceImpl implements AccountsPersistenceService {
     }
 
     @Override
+    @Transactional
     public Optional<Account> findAccount(String currentAccountId) {
 
         final Optional<AccountEntity> accountEntity = accountRepository.findByCurrentAccountId(currentAccountId);
@@ -36,10 +38,11 @@ class AccountsPersistenceServiceImpl implements AccountsPersistenceService {
     }
 
     @Override
+    @Transactional
     public List<Account> findAllAccounts(String customerId) {
 
         final List<AccountEntity> accountEntities = accountRepository.findAllByCustomerEntityCustomerId(customerId);
 
-        return accountEntities.stream().map(accountModelConverter::toModel).collect(Collectors.toUnmodifiableList());
+        return accountEntities.stream().map(accountModelConverter::toModel).toList();
     }
 }
